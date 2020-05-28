@@ -366,7 +366,7 @@ namespace Ryujinx.Graphics.Gpu.State
         /// <returns>The data at the specified location</returns>
         public T Get<T>(MethodOffset offset) where T : struct
         {
-            return MemoryMarshal.Cast<int, T>(_memory.AsSpan().Slice((int)offset))[0];
+            return MemoryMarshal.Cast<int, T>(_memory.AsSpan((int)offset))[0];
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace Ryujinx.Graphics.Gpu.State
         public void Set<T>(MethodOffset offset, T data) where T : struct
         {
             ReadOnlySpan<int> intSpan = MemoryMarshal.Cast<T, int>(MemoryMarshal.CreateReadOnlySpan(ref data, 1));
-            intSpan.CopyTo(_memory.AsSpan().Slice((int)offset, intSpan.Length));
+            intSpan.CopyTo(_memory.AsSpan((int)offset, intSpan.Length));
         }
     }
 }
